@@ -127,7 +127,7 @@ def main():
     # Connecting ClearML with the current process,
     # from here on everything is logged automatically
     task = Task.init(project_name='examples', task_name='Keras MNIST serve example', output_uri=True)
-    task.execute_remotely("v2-gpus")
+    task.execute_remotely("v2-gpu")
     # Advanced: setting model class enumeration
     labels = dict(('digit_%d' % i, i) for i in range(10))
     task.set_model_label_enumeration(labels)
