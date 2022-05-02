@@ -49,3 +49,8 @@ def create_enqueue_controller(
     queue_name = "cpu"
     Task.enqueue(task=clearml_task.id, queue_name=queue_name)
     return clearml_task.id
+
+
+if __name__ == "__name__":
+
+    create_enqueue_controller(1, "1", 1, "1")
