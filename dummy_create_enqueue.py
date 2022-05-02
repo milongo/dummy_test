@@ -20,7 +20,14 @@ def create_enqueue_controller(
     Returns:
         Task: The enqueue controller task
     """
-
+    parameters = {
+        "building_id": 9,
+        "building_name": "MTL-CLEARML-911",
+        "application_id": "1",
+        "application_name": "dummy_test",
+        "control_zone_id": "dummy_control",
+        "client": "client_1",
+    }
     clearml_task = Task.create(
         project_name="Emilio/dummy_test",
         task_name="dummy_create_enqueue",
@@ -32,19 +39,12 @@ def create_enqueue_controller(
         docker=None,
         # packages=True,
         add_task_init_call=False,
+        argparse_args=parameters,
     )
 
     # TEMPORARY -- this info will be injected from the client side (username or others)
 
-    parameters = {
-        "building_id": 9,
-        "building_name": "MTL-CLEARML-911",
-        "application_id": "1",
-        "application_name": "dummy_test",
-        "control_zone_id": "dummy_control",
-        "client": "client_1",
-    }
-    clearml_task.connect(parameters)
+    # clearml_task.connect(parameters)
 
     queue_name = "cpu"
     Task.enqueue(task=clearml_task.id, queue_name=queue_name)
