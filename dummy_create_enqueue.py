@@ -28,7 +28,7 @@ def create_enqueue_controller(
         repo="keras_mnist",
         branch="master",
         script="./dummy_pipeline.py",
-        requirements_file="./requirements_file",
+        requirements_file="./requirements.txt",
         docker=None,
         # packages=True,
         add_task_init_call=False,
