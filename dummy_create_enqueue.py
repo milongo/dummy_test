@@ -51,6 +51,6 @@ def create_enqueue_controller(
     return clearml_task.id
 
 
-if __name__ == "__name__":
+if __name__ == "__main__":
 
     create_enqueue_controller(1, "1", 1, "1")
