@@ -25,7 +25,7 @@ def create_enqueue_controller(
         project_name="Emilio/dummy_test",
         task_name="dummy_create_enqueue",
         task_type=Task.TaskTypes.controller,
-        repo="dummy_repo",
+        repo="keras_mnist",
         branch="master",
         script="./dummy_pipeline.py",
         requirements_file="./requirements_file",
