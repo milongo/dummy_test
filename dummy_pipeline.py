@@ -6,7 +6,7 @@ from clearml import TaskTypes
 # notice all package imports inside the function will be automatically logged as
 # required packages for the pipeline execution step
 @PipelineDecorator.component(
-    return_values=["data_frame"], cache=True, task_type=TaskTypes.data_processing
+    return_values=["data_frame"], cache=True, task_type=TaskTypes.data_processing, execution_queue="cpu",
 )
 def step_one(pickle_data_url: str, extra: int = 43):
     print("step_one")
@@ -31,7 +31,10 @@ def step_one(pickle_data_url: str, extra: int = 43):
 # Specifying `return_values` makes sure the function step can return an object to the pipeline logic
 # In this case, the returned tuple will be stored as an artifact named "processed_data"
 @PipelineDecorator.component(
-    return_values=["processed_data"], cache=True, task_type=TaskTypes.data_processing
+    return_values=["processed_data"],
+    cache=True,
+    task_type=TaskTypes.data_processing,
+    execution_queue="cpu",
 )
 def step_two(data_frame, test_size=0.2, random_state=42):
     print("step_two")
@@ -54,7 +57,10 @@ def step_two(data_frame, test_size=0.2, random_state=42):
 # Specifying `return_values` makes sure the function step can return an object to the pipeline logic
 # In this case, the returned object will be stored as an artifact named "model"
 @PipelineDecorator.component(
-    return_values=["model"], cache=True, task_type=TaskTypes.training
+    return_values=["model"],
+    cache=True,
+    task_type=TaskTypes.training,
+    execution_queue="cpu",
 )
 def step_three(data):
     print("step_three")
