@@ -1,12 +1,15 @@
 from clearml.automation.controller import PipelineDecorator
 from clearml import TaskTypes
-
+from clearml import Task
 
 # Make the following function an independent pipeline component step
 # notice all package imports inside the function will be automatically logged as
 # required packages for the pipeline execution step
 @PipelineDecorator.component(
-    return_values=["data_frame"], cache=True, task_type=TaskTypes.data_processing, execution_queue="cpu",
+    return_values=["data_frame"],
+    cache=True,
+    task_type=TaskTypes.data_processing,
+    execution_queue="cpu",
 )
 def step_one(pickle_data_url: str, extra: int = 43):
     print("step_one")
@@ -79,7 +82,7 @@ def step_three(data):
 # Only when a return value is used, the pipeline logic will wait for the component execution to complete
 @PipelineDecorator.pipeline(
     name="custom pipeline logic",
-    project="examples",
+    project="Emilio/dummy_test",
     version="0.0.5",
     pipeline_execution_queue="cpu-services",
 )
@@ -113,6 +116,11 @@ def executing_pipeline(pickle_url, mock_parameter="mock"):
     # we actually deserialize the object from the third step, and thus wait for the third step to complete.
     print("pipeline completed with model: {}".format(model))
 
+    executing_pipeline_task = Task.current_task()
+    executing_pipeline_task.add_tags("[something]")
+    executing_pipeline_task.mark_completed()
+    executing_pipeline_task.publish()
+
 
 if __name__ == "__main__":
     # set the pipeline steps default execution queue (per specific step we can override it with the decorator)
@@ -122,6 +130,8 @@ if __name__ == "__main__":
     # PipelineDecorator.run_locally()
 
     # Start the pipeline execution logic.
+    PipelineDecorator.run_locally()
+
     executing_pipeline(
         pickle_url="https://github.com/allegroai/events/raw/master/odsc20-east/generic/iris_dataset.pkl",
     )
